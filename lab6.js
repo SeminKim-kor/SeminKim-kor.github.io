@@ -2,8 +2,7 @@ function loadData() {
     fetch("https://brianobruno.github.io/cats.json")
         .then(response => response.json())
         .then(data => {
-            let facts = data.facts || [];
-            facts.sort(function(a, b) {
+            data.facts.sort(function(a, b) {
                 return a.factId - b.factId;
             });
             let tableBody = document.getElementById("tableBody");
@@ -12,14 +11,12 @@ function loadData() {
                 tableBody.innerHTML +=
                     "<tr>" +
                     "<td>" + data.facts[i].factId + "</td>" +
-                    "<td>" + data.facts[i].fact + "</td>" +
+                    "<td>" + data.facts[i].text + "</td>" +
                     "</tr>";
             }
-            if (data.catPhoto) {
-                document.getElementById("catImage").src = data.catPhoto;
-            }
+            document.getElementById("catImage").src = data.catPhoto;
         })
         .catch(error => {
-            console.log("Error:", error);
+            console.log(error);
         });
 }
