@@ -8,11 +8,11 @@ function loadData() {
             });
             let tableBody = document.getElementById("tableBody");
             tableBody.innerHTML = "";
-            for (let i = 0; i < facts.length; i++) {
+            for (let i = 0; i < data.facts.length; i++) {
                 tableBody.innerHTML +=
                     "<tr>" +
-                    "<td>" + facts[i].factId + "</td>" +
-                    "<td>" + facts[i].fact + "</td>" +
+                    "<td>" + data.facts[i].factId + "</td>" +
+                    "<td>" + data.facts[i].fact + "</td>" +
                     "</tr>";
             }
             if (data.catPhoto) {
