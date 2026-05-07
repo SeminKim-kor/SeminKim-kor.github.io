@@ -8,9 +8,9 @@
         <div class="container mt-4">
             <h1 class="text-center">Spotify Music Search</h1>
             <p class="text-center">Search for songs using the Spotify Web API.</p>
-            <button id="loginBtn" class="btn btn-success">Login with Spotify</button>
+            <button class="btn btn-success" onclick="login()">Login with Spotify</button>
             <input id="searchInput" type="text" class="form-control" placeholder="Enter a song name">
-            <button id="searchBtn" class="btn btn-primary">Search</button>
+            <button class="btn btn-primary" onclick="searchSong()">Search</button>
             <div id="message"></div>
             <div id="results"></div>
         </div>
