@@ -70,7 +70,6 @@ async function searchSong() {
         document.getElementById("message").innerHTML = "Please login first.";
         return;
     }
-
     if (userSearch == "") {
         document.getElementById("message").innerHTML = "Please enter a song name.";
         return;
@@ -91,12 +90,10 @@ async function searchSong() {
     let tracks = data.tracks.items;
     for (let i = 0; i < tracks.length; i++) {
         let track = tracks[i];
-
         let songName = track.name;
         let artistName = track.artists[0].name;
         let albumName = track.album.name;
         let imageUrl = track.album.images[0].url;
-
         results.innerHTML += `
             <div class="card mb-3">
                 <div class="card-body">
