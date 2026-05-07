@@ -63,7 +63,49 @@ async function getAccessToken(code) {
         document.getElementById("message").innerHTML = "Login failed.";
     }
 }
-function searchSong() {
+async function searchSong() {
     let userSearch = document.getElementById("searchInput").value;
-    document.getElementById("message").innerHTML = "You searched for: " + userSearch;
+    let token = localStorage.getItem("access_token");
+    if (token == null) {
+        document.getElementById("message").innerHTML = "Please login first.";
+        return;
+    }
+
+    if (userSearch == "") {
+        document.getElementById("message").innerHTML = "Please enter a song name.";
+        return;
+    }
+    let url = "https://api.spotify.com/v1/search";
+    url += "?q=" + encodeURIComponent(userSearch);
+    url += "&type=track";
+    url += "&limit=5";
+    let response = await fetch(url, {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    });
+    let data = await response.json();
+    document.getElementById("message").innerHTML = "Search results for: " + userSearch;
+    let results = document.getElementById("results");
+    results.innerHTML = "";
+    let tracks = data.tracks.items;
+    for (let i = 0; i < tracks.length; i++) {
+        let track = tracks[i];
+
+        let songName = track.name;
+        let artistName = track.artists[0].name;
+        let albumName = track.album.name;
+        let imageUrl = track.album.images[0].url;
+
+        results.innerHTML += `
+            <div class="card mb-3">
+                <div class="card-body">
+                    <img src="${imageUrl}" width="100">
+                    <h5>${songName}</h5>
+                    <p>Artist: ${artistName}</p>
+                    <p>Album: ${albumName}</p>
+                </div>
+            </div>
+        `;
+    }
 }
