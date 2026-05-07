@@ -101,6 +101,7 @@ async function searchSong() {
                     <h5>${songName}</h5>
                     <p>Artist: ${artistName}</p>
                     <p>Album: ${albumName}</p>
+                    <a class="btn btn-secondary" href="track.html?id=${track.id}">View Details</a>
                 </div>
             </div>
         `;
