@@ -1,5 +1,5 @@
 let clientId = "69d5cebd602545138a449865d1803dd9";
-let redirectUri = "http://127.0.0.1:5500/finalProject/index.html";
+let redirectUri = "https://seminkim-kor.github.io/finalProject/index.html";
 checkForCode();
 checkForTrackPage();
 async function login() {
