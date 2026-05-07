@@ -1,6 +1,7 @@
 let clientId = "69d5cebd602545138a449865d1803dd9";
 let redirectUri = "http://127.0.0.1:5500/finalProject/index.html";
 checkForCode();
+checkForTrackPage();
 async function login() {
     let codeVerifier = makeRandomString(64);
     let codeChallenge = await makeCodeChallenge(codeVerifier);
@@ -106,4 +107,53 @@ async function searchSong() {
             </div>
         `;
     }
+}
+async function checkForTrackPage() {
+    let trackDetails = document.getElementById("trackDetails");
+    if (trackDetails == null) {
+        return;
+    }
+    let params = new URLSearchParams(window.location.search);
+    let trackId = params.get("id");
+    if (trackId == null) {
+        document.getElementById("message").innerHTML = "No track selected.";
+        return;
+    }
+    await getTrackDetails(trackId);
+}
+async function getTrackDetails(trackId) {
+    let token = localStorage.getItem("access_token");
+    if (token == null) {
+        document.getElementById("message").innerHTML = "Please login first.";
+        return;
+    }
+    let url = "https://api.spotify.com/v1/tracks/" + trackId;
+    let response = await fetch(url, {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    });
+    let track = await response.json();
+    let songName = track.name;
+    let artistName = track.artists[0].name;
+    let albumName = track.album.name;
+    let imageUrl = track.album.images[0].url;
+    let releaseDate = track.album.release_date;
+    let popularity = track.popularity;
+    let spotifyUrl = track.external_urls.spotify;
+    document.getElementById("trackDetails").innerHTML = `
+        <div class="card">
+            <div class="card-body">
+                <img src="${imageUrl}" width="200">
+                <h2>${songName}</h2>
+                <p>Artist: ${artistName}</p>
+                <p>Album: ${albumName}</p>
+                <p>Release Date: ${releaseDate}</p>
+                <p>Popularity: ${popularity}</p>
+                <a class="btn btn-success" href="${spotifyUrl}" target="_blank">
+                    Open on Spotify
+                </a>
+            </div>
+        </div>
+    `;
 }
