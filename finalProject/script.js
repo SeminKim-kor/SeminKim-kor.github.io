@@ -59,7 +59,6 @@ async function getAccessToken(code) {
 
         document.getElementById("message").innerHTML = "Login successful.";
 
-        window.history.replaceState({}, document.title, "index.html");
     } else {
         document.getElementById("message").innerHTML = "Login failed.";
     }
